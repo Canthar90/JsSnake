@@ -3,27 +3,53 @@ let direction
 
 
 if(!interval){
-    interval = setInterval(gameLogic, 300)
+    interval = setInterval(gameLogic, 250)
 }
 
 
-function moveDown(){}
+function moveDown(element){
+    let elemStyle = window.getComputedStyle(element)
+    let topValue = elemStyle.getPropertyValue("top").replace("px", "")
+   
+    element.style.top = (Number(topValue) + 10) + "px"
+}
 
-function moveUp(){}
+function moveUp(element){
+    let elementStyle = window.getComputedStyle(element)
+    let topValue = elementStyle.getPropertyValue("top").replace("px","")
 
-function moveRight(){}
+    element.style.top = (Number(topValue) - 10) + "px"
+}
 
-function moveLeft(){}
+function moveRight(element){
+    let elementStyle = window.getComputedStyle(element)
+    let leftValue = elementStyle.getPropertyValue("left").replace("px","")
+
+    element.style.left = (Number(leftValue) + 10) + "px"
+}
+
+function moveLeft(element){
+    let elementStyle = window.getComputedStyle(element)
+    let leftValue = elementStyle.getPropertyValue("left").repeat("px","")
+
+    element.style.left = (Number(leftValue) - 10) + "px"
+}
 
 function moveDirections() {
     if (direction === "down"){
-        moveDown()
+        let snakeHead = document.getElementById("snake-segment-1")
+        moveDown(snakeHead)
     }else if(direction === "up"){
-        moveUp()
+        let snakeHead = document.getElementById("snake-segment-1")
+        moveUp(snakeHead)
     }else if(direction === "right"){
-        moveRight()
+        let snakeHead = document.getElementById("snake-segment-1")
+        moveRight(snakeHead)
     }else if(direction === "left"){
-        moveLeft()
+        let snakeHead = document.getElementById("snake-segment-1")
+        moveLeft(snakeHead)
+    }else{
+        return
     }
 }
 
