@@ -30,7 +30,7 @@ function moveDown(element){
     
     let bottomValue = Number(topValue) + 2 * Number(rem)
     
-    if (bottomValue <= boardHight) {
+    if (bottomValue < boardHight - Number(boardTop)) {
         element.style.top = (Number(topValue) + 10) + "px"
     }
    
@@ -40,21 +40,32 @@ function moveUp(element){
     let elementStyle = window.getComputedStyle(element)
     let topValue = elementStyle.getPropertyValue("top").replace("px","")
 
-    element.style.top = (Number(topValue) - 10) + "px"
+    if(Number(topValue) >= Number(boardTop)){
+        element.style.top = (Number(topValue) - 10) + "px"
+    }
+    
 }
 
 function moveRight(element){
     let elementStyle = window.getComputedStyle(element)
     let leftValue = elementStyle.getPropertyValue("left").replace("px","")
 
-    element.style.left = (Number(leftValue) + 10) + "px"
+    let rightValue = Number(leftValue) + 2 * Number(rem)
+    
+    if (rightValue <= boardWidth - Number(boardLeft)){
+        element.style.left = (Number(leftValue) + 10) + "px"
+    }
+
+    
 }
 
 function moveLeft(element){
     let elementStyle = window.getComputedStyle(element)
     let leftValue = elementStyle.getPropertyValue("left").replace("px","")
-
-    element.style.left = (Number(leftValue) - 10) + "px"
+    if (Number(leftValue) >= Number(boardLeft)){
+        element.style.left = (Number(leftValue) - 10) + "px"
+    }
+    
 }
 
 function moveDirections() {
