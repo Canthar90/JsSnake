@@ -13,5 +13,7 @@
     height: 900px;
     border-radius: 1rem;
     border-color: black;
+    border-width: 1rem;
+    border: solid;
     
 }
