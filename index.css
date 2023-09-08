@@ -3,4 +3,15 @@
     height: 2rem;
     background-color: #053B50;
     position: absolute;
+    left: 6rem;
+    top: 4rem
+}
+
+.board{
+    position: absolute;
+    width: 1200px;
+    height: 900px;
+    border-radius: 1rem;
+    border-color: black;
+    
 }

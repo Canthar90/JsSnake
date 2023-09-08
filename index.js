@@ -1,13 +1,21 @@
 let interval
 let direction
-
+let board 
+let boardPos 
+let boardTop
+board = document.getElementById('game-board-1')
+boardTop = board.style.getPropertyValue("top")
 
 if(!interval){
     interval = setInterval(gameLogic, 250)
+    
+    console.log(board)
+    
 }
 
 
 function moveDown(element){
+    console.log(boardTop)
     let elemStyle = window.getComputedStyle(element)
     let topValue = elemStyle.getPropertyValue("top").replace("px", "")
    
@@ -30,7 +38,7 @@ function moveRight(element){
 
 function moveLeft(element){
     let elementStyle = window.getComputedStyle(element)
-    let leftValue = elementStyle.getPropertyValue("left").repeat("px","")
+    let leftValue = elementStyle.getPropertyValue("left").replace("px","")
 
     element.style.left = (Number(leftValue) - 10) + "px"
 }
