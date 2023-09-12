@@ -31,23 +31,34 @@ if(!interval){
    
 }
 
+function foodColisionDetection (){
+    
+}
+
 
 function createFoodElement () {
-    foodItem = document.createElement("div")
-    foodItem.id = `food-${score}`
-    foodItem.style.backgroundColor = "red"
-    foodItem.style.width = rem
-    foodItem.style.height = rem
-    foodItem.style.position = "absolute"
+    if (foodItem) {
+        // document.body.removeChild(foodItem)
+        foodItem.style.top =  (Math.random() * (boardBorderDown - boardBorderUp) + boardBorderUp) + 'px'
+        foodItem.style.left =  (Math.random() * (boardBorderRight - boardBorderLeft) + boardBorderLeft) + 'px'
+    }else {
+        foodItem = document.createElement("div")
+        foodItem.id = `food`
+        foodItem.style.backgroundColor = "red"
+        foodItem.style.width = rem
+        foodItem.style.height = rem
+        foodItem.style.position = "absolute"
+        
+        foodItem.style.top =  (Math.random() * (boardBorderDown - boardBorderUp) + boardBorderUp) + 'px'
+        foodItem.style.left =  (Math.random() * (boardBorderRight - boardBorderLeft) + boardBorderLeft) + 'px'
+        
+        board.appendChild(foodItem)
+        document.body.appendChild(foodItem)
+        
+        foodExistance = true
+    }
+
     
-    foodItem.style.top =  (Math.random() * (boardBorderDown - boardBorderUp) + boardBorderUp) + 'px'
-    foodItem.style.left =  (Math.random() * (boardBorderRight - boardBorderLeft) + boardBorderLeft) + 'px'
-    
-    board.appendChild(foodItem)
-    document.body.appendChild(foodItem)
-    // document.body.insertBefore(foodItem, snakeHead)
-    
-    foodExistance = true
 }
 
 
@@ -59,7 +70,7 @@ function newSnakeElement() {
     
     snakeSegments.push(newElement)
   
-    snakeHead.after(newElement)
+    snakeSegments[0].after(newElement)
 }
 
 
@@ -172,8 +183,11 @@ function gameLogic () {
 
     if (!foodExistance) {
         createFoodElement()
+        
     }
     moveDirections()
+    createFoodElement()
+    // foodColisionDetection()
 }
 
 newSnakeElement()
