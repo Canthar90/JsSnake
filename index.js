@@ -7,6 +7,8 @@ let boardLeft
 let snakeHead = document.getElementById("snake-segment-1")
 let snakeSegments = [snakeHead]
 let score = 0
+let foodExistance = false
+let foodItem
 
 const boardHight = 900
 const boardWidth = 1200
@@ -17,6 +19,11 @@ board = document.getElementById('game-board-1')
 boardTop = window.getComputedStyle(board).getPropertyValue("top").replace("px", "")
 boardLeft = window.getComputedStyle(board).getPropertyValue("left").replace("px", "")
 
+const boardBorderDown = boardHight - Number(boardTop)
+const boardBorderUp = Number(boardTop)
+const boardBorderRight = boardWidth - Number(boardLeft)
+const boardBorderLeft = Number(boardLeft)
+
 
 
 if(!interval){
@@ -24,14 +31,34 @@ if(!interval){
    
 }
 
+
+function createFoodElement () {
+    foodItem = document.createElement("div")
+    foodItem.id = `food-${score}`
+    foodItem.style.backgroundColor = "red"
+    foodItem.style.width = rem
+    foodItem.style.height = rem
+    foodItem.style.position = "absolute"
+    
+    foodItem.style.top =  (Math.random() * (boardBorderDown - boardBorderUp) + boardBorderUp) + 'px'
+    foodItem.style.left =  (Math.random() * (boardBorderRight - boardBorderLeft) + boardBorderLeft) + 'px'
+    
+    board.appendChild(foodItem)
+    document.body.appendChild(foodItem)
+    // document.body.insertBefore(foodItem, snakeHead)
+    
+    foodExistance = true
+}
+
+
 function newSnakeElement() {
     score ++
     
     let newElement = snakeSegments[0].cloneNode(true)
     newElement.id = `snake-element-${score}`
-    console.log(newElement.id)
+    
     snakeSegments.push(newElement)
-    console.log(snakeSegments)
+  
     snakeHead.after(newElement)
 }
 
@@ -51,8 +78,8 @@ function moveDown(element){
         elementToMove.style.left = leftCorrectionValue
         snakeSegments.unshift(elementToMove)
     }
-   
 }
+
 
 function moveUp(element){
     let elementStyle = window.getComputedStyle(element)
@@ -67,8 +94,8 @@ function moveUp(element){
         elementToMove.style.left = leftCorrectionValue
         snakeSegments.unshift(elementToMove)
     }
-    
 }
+
 
 function moveRight(element){
     let elementStyle = window.getComputedStyle(element)
@@ -84,9 +111,8 @@ function moveRight(element){
         elementToMove.style.top = topCorrectionValue
         snakeSegments.unshift(elementToMove)
     }
-
-    
 }
+
 
 function moveLeft(element){
     let elementStyle = window.getComputedStyle(element)
@@ -101,8 +127,8 @@ function moveLeft(element){
         elementToMove.style.top = topCorrectionValue
         snakeSegments.unshift(elementToMove)
     }
-    
 }
+
 
 function moveDirections() {
     let snakeFirtsSegment = snakeSegments[0]
@@ -144,6 +170,9 @@ function gameLogic () {
 
     })
 
+    if (!foodExistance) {
+        createFoodElement()
+    }
     moveDirections()
 }
 
