@@ -56,10 +56,23 @@ function foodColisionDetection (snakeSegment){
 }
 
 
+function checkIfFoodColideWithSnake(){
+    for (segment in snakeSegments){
+        if (foodColisionDetection(segment)){
+            createFoodElement()
+            return
+        }else {
+            return
+        }
+    }
+}
+
+
 function createFoodElement () {
     if (foodItem) {
         foodItem.style.top =  (Math.random() * (boardBorderDown - boardBorderUp - 90) + boardBorderUp + 90) + 'px'
         foodItem.style.left =  (Math.random() * (boardBorderRight - boardBorderLeft - 90) + boardBorderLeft + 90) + 'px'
+        
     }else {
         foodItem = document.createElement("div")
         foodItem.id = `food`
@@ -75,8 +88,9 @@ function createFoodElement () {
         document.body.appendChild(foodItem)
         
         foodExistance = true
-    }
 
+    }
+    checkIfFoodColideWithSnake()
     
 }
 
