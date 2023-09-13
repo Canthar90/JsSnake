@@ -32,15 +32,33 @@ if(!interval){
 }
 
 function foodColisionDetection (){
+    let snakeHeadLeftPos = window.getComputedStyle(snakeSegments[0]).left.replace("px", "")
+    snakeHeadLeftPos = Number(snakeHeadLeftPos)
+    let snakeHeadRightPos = snakeHeadLeftPos + 32
     
+    let snakeHeadTopPos = window.getComputedStyle(snakeSegments[0]).top.replace("px", "")
+    snakeHeadTopPos = Number(snakeHeadTopPos)
+    let snakeHeadBottomPos = snakeHeadTopPos + 32
+
+    let foodLeftPos = window.getComputedStyle(foodItem).left.replace("px", "")
+    foodLeftPos = Number(foodLeftPos)
+    let foodRightPos = foodLeftPos + 16
+
+    let foodTopPos = window.getComputedStyle(foodItem).top.replace("px", "")
+    foodTopPos = Number(foodTopPos)
+    let foodBottomPos = foodTopPos + 16
+    
+    if (!(snakeHeadRightPos < foodLeftPos || snakeHeadLeftPos > foodRightPos || snakeHeadBottomPos < foodTopPos || snakeHeadTopPos > foodBottomPos)){
+        createFoodElement()
+        newSnakeElement()
+    }
 }
 
 
 function createFoodElement () {
     if (foodItem) {
-        // document.body.removeChild(foodItem)
-        foodItem.style.top =  (Math.random() * (boardBorderDown - boardBorderUp) + boardBorderUp) + 'px'
-        foodItem.style.left =  (Math.random() * (boardBorderRight - boardBorderLeft) + boardBorderLeft) + 'px'
+        foodItem.style.top =  (Math.random() * (boardBorderDown - boardBorderUp - 90) + boardBorderUp + 90) + 'px'
+        foodItem.style.left =  (Math.random() * (boardBorderRight - boardBorderLeft - 90) + boardBorderLeft + 90) + 'px'
     }else {
         foodItem = document.createElement("div")
         foodItem.id = `food`
@@ -186,10 +204,10 @@ function gameLogic () {
         
     }
     moveDirections()
-    createFoodElement()
-    // foodColisionDetection()
+    // createFoodElement()
+    foodColisionDetection()
 }
 
-newSnakeElement()
-newSnakeElement()
+// newSnakeElement()
+// newSnakeElement()
 
