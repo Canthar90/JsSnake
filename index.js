@@ -31,14 +31,15 @@ if(!interval){
    
 }
 
-function foodColisionDetection (){
-    let snakeHeadLeftPos = window.getComputedStyle(snakeSegments[0]).left.replace("px", "")
-    snakeHeadLeftPos = Number(snakeHeadLeftPos)
-    let snakeHeadRightPos = snakeHeadLeftPos + 32
+
+function foodColisionDetection (snakeSegment){
+    let snakeLeftPos = window.getComputedStyle(snakeSegment).left.replace("px", "")
+    snakeLeftPos = Number(snakeLeftPos)
+    let snakeRightPos = snakeLeftPos + 32
     
-    let snakeHeadTopPos = window.getComputedStyle(snakeSegments[0]).top.replace("px", "")
-    snakeHeadTopPos = Number(snakeHeadTopPos)
-    let snakeHeadBottomPos = snakeHeadTopPos + 32
+    let snakeTopPos = window.getComputedStyle(snakeSegment).top.replace("px", "")
+    snakeTopPos = Number(snakeTopPos)
+    let snakeBottomPos = snakeTopPos + 32
 
     let foodLeftPos = window.getComputedStyle(foodItem).left.replace("px", "")
     foodLeftPos = Number(foodLeftPos)
@@ -48,9 +49,9 @@ function foodColisionDetection (){
     foodTopPos = Number(foodTopPos)
     let foodBottomPos = foodTopPos + 16
     
-    if (!(snakeHeadRightPos < foodLeftPos || snakeHeadLeftPos > foodRightPos || snakeHeadBottomPos < foodTopPos || snakeHeadTopPos > foodBottomPos)){
+    if (!(snakeRightPos < foodLeftPos || snakeLeftPos > foodRightPos || snakeBottomPos < foodTopPos || snakeTopPos > foodBottomPos)){
         createFoodElement()
-        newSnakeElement()
+        return true
     }
 }
 
@@ -205,7 +206,9 @@ function gameLogic () {
     }
     moveDirections()
     // createFoodElement()
-    foodColisionDetection()
+    if (foodColisionDetection(snakeSegments[0])){
+        newSnakeElement()
+    }
 }
 
 // newSnakeElement()
