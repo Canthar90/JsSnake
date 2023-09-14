@@ -9,6 +9,9 @@ let snakeSegments = [snakeHead]
 let score = 0
 let foodExistance = false
 let foodItem
+let gameOver = false
+let gameOverButton
+let gameOverDescription
 
 const boardHight = 900
 const boardWidth = 1200
@@ -29,6 +32,32 @@ const boardBorderLeft = Number(boardLeft)
 if(!interval){
     interval = setInterval(gameLogic, 300)
    
+}
+
+
+function gameOverScreen (){
+    if (gameOver && !gameOverButton){
+        gameOverButton = document.createElement("button")
+        gameOverButton.style.position = "absolute"
+        gameOverButton.style.cursor = "pointer"
+        gameOverButton.textContent = "Restart"
+        gameOverButton.style.left = boardWidth/2
+        gameOverButton.style.top = boardHight/2 + rem
+        gameOverButton.style.padding = 0.5 * rem
+
+        document.body.appendChild(gameOverButton)
+
+        gameOverDescription = document.createElement("h1")
+        gameOverDescription.style.position = "absolute"
+        gameOverDescription.textContent = "U DIEDD"
+        gameOverDescription.style.color = "black"
+        gameOverDescription.style.fontSize = 6*rem
+        gameOverDescription.style.left = boardWidth/2 - 10*rem
+        gameOverDescription.style.top = boardHight/2 - 150
+
+        document.body.appendChild(gameOverDescription)
+    }
+    
 }
 
 
@@ -126,6 +155,7 @@ function moveDown(element){
         snakeSegments.unshift(elementToMove)
     } else {
         snakeSegments.unshift(elementToMove)
+        gameOver = true
     }
 }
 
@@ -145,6 +175,7 @@ function moveUp(element){
         snakeSegments.unshift(elementToMove)
     } else {
         snakeSegments.unshift(elementToMove)
+        gameOver = true
     }
 }
 
@@ -165,6 +196,7 @@ function moveRight(element){
         snakeSegments.unshift(elementToMove)
     } else {
         snakeSegments.unshift(elementToMove)
+        gameOver = true
     }
 
 }
@@ -185,6 +217,7 @@ function moveLeft(element){
         snakeSegments.unshift(elementToMove)
     } else {
         snakeSegments.unshift(elementToMove)
+        gameOver = true
     }
     
 }
@@ -212,6 +245,12 @@ function moveDirections() {
 
 
 function gameLogic () {
+    if (gameOver){
+        console.log("Game Over")
+        gameOverScreen()
+        return
+    }
+
     document.addEventListener('keydown', (event)=>{
         
         if (event.key === "ArrowDown" && direction !== 'down' && direction !== "up"){
