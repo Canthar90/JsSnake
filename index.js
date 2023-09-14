@@ -27,7 +27,7 @@ const boardBorderLeft = Number(boardLeft)
 
 
 if(!interval){
-    interval = setInterval(gameLogic, 450)
+    interval = setInterval(gameLogic, 300)
    
 }
 
@@ -37,7 +37,7 @@ function foodColisionDetection (snakeSegment){
     snakeLeftPos = Number(snakeLeftPos)
     let snakeRightPos = snakeLeftPos + 32
     
-    let snakeTopPos = window.getComputedStyle(snakeSegment).top.replace("px", "")
+    let snakeTopPos = window.getComputedStyle(  snakeSegment).top.replace("px", "")
     snakeTopPos = Number(snakeTopPos)
     let snakeBottomPos = snakeTopPos + 32
 
@@ -58,20 +58,22 @@ function foodColisionDetection (snakeSegment){
 
 function checkIfFoodColideWithSnake(){
     for (segment in snakeSegments){
-        if (foodColisionDetection(segment)){
-            createFoodElement()
-            return
-        }else {
-            return
+        
+        if (foodColisionDetection(snakeSegments[segment])){
+            break
         }
+        
     }
 }
 
 
 function createFoodElement () {
-    if (foodItem) {
+    if (foodItem ) {
         foodItem.style.top =  (Math.random() * (boardBorderDown - boardBorderUp - 90) + boardBorderUp + 90) + 'px'
         foodItem.style.left =  (Math.random() * (boardBorderRight - boardBorderLeft - 90) + boardBorderLeft + 90) + 'px'
+        
+        foodExistance = true
+        checkIfFoodColideWithSnake()
         
     }else {
         foodItem = document.createElement("div")
@@ -88,9 +90,9 @@ function createFoodElement () {
         document.body.appendChild(foodItem)
         
         foodExistance = true
-
+        checkIfFoodColideWithSnake()
+        
     }
-    checkIfFoodColideWithSnake()
     
 }
 
@@ -118,8 +120,11 @@ function moveDown(element){
     let elementToMove = snakeSegments.pop()
     
     if (bottomValue < boardHight - Number(boardTop)) {
+        
         elementToMove.style.top = (Number(topValue) + 2*Number(rem)) + "px"
         elementToMove.style.left = leftCorrectionValue
+        snakeSegments.unshift(elementToMove)
+    } else {
         snakeSegments.unshift(elementToMove)
     }
 }
@@ -130,12 +135,15 @@ function moveUp(element){
     let topValue = elementStyle.getPropertyValue("top").replace("px","")
 
     let leftCorrectionValue = elementStyle.getPropertyValue("left")
-
     let elementToMove = snakeSegments.pop()
-
+    
     if(Number(topValue) >= Number(boardTop)){
+        
+
         elementToMove.style.top = (Number(topValue) - 2*Number(rem)) + "px"
         elementToMove.style.left = leftCorrectionValue
+        snakeSegments.unshift(elementToMove)
+    } else {
         snakeSegments.unshift(elementToMove)
     }
 }
@@ -151,10 +159,14 @@ function moveRight(element){
     let elementToMove = snakeSegments.pop()
     
     if (rightValue <= boardWidth - Number(boardLeft)){
+        
         elementToMove.style.left = (Number(leftValue) + 2*Number(rem)) + "px"
         elementToMove.style.top = topCorrectionValue
         snakeSegments.unshift(elementToMove)
+    } else {
+        snakeSegments.unshift(elementToMove)
     }
+
 }
 
 
@@ -167,10 +179,14 @@ function moveLeft(element){
     let elementToMove = snakeSegments.pop()
 
     if (Number(leftValue) >= Number(boardLeft)){
+        
         elementToMove.style.left = (Number(leftValue) - 2*Number(rem)) + "px"
         elementToMove.style.top = topCorrectionValue
         snakeSegments.unshift(elementToMove)
+    } else {
+        snakeSegments.unshift(elementToMove)
     }
+    
 }
 
 
@@ -222,9 +238,9 @@ function gameLogic () {
     // createFoodElement()
     if (foodColisionDetection(snakeSegments[0])){
         newSnakeElement()
+        checkIfFoodColideWithSnake()
     }
 }
 
-// newSnakeElement()
-// newSnakeElement()
+
 
