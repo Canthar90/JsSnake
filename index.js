@@ -41,37 +41,52 @@ function gameRestart (){
 
 function gameOverScreen (){
     if (gameOver && !gameOverButton){
-        gameOverButton = document.createElement("button")
-        gameOverButton.style.position = "absolute"
-        gameOverButton.style.cursor = "pointer"
-        gameOverButton.textContent = "Restart"
-        gameOverButton.style.left = boardWidth/2
-        gameOverButton.style.top = boardHight/2 + rem
-        gameOverButton.style.padding = 0.5 * rem
-
-        document.body.appendChild(gameOverButton)
-
-        gameOverDescription = document.createElement("h1")
-        gameOverDescription.style.position = "absolute"
-        gameOverDescription.textContent = "U DIEDD"
-        gameOverDescription.style.color = "black"
-        gameOverDescription.style.fontSize = 6*rem
-        gameOverDescription.style.left = boardWidth/2 - 10*rem
-        gameOverDescription.style.top = boardHight/2 - 150
-        gameOverButton.onclick = () =>  gameRestart()
-
-        document.body.appendChild(gameOverDescription)
-
-        gameScore = document.createElement("h1")
-        gameScore.style.position = "absolute"
-        gameScore.textContent = `Your score is ${score}`
-        gameScore.fontSize = 2*rem
-        gameScore.style.left = boardWidth/2 - 4*rem
-        gameScore.style.top = boardHight/2 + 40
-
-        document.body.appendChild(gameScore)
+        createGameOverButton()
+        createGameOverDescription()
+        createGameOverDescription()
     }
-    
+}
+
+
+function createGameOverButton() {
+
+    gameOverButton = document.createElement("button")
+    gameOverButton.style.position = "absolute"
+    gameOverButton.style.cursor = "pointer"
+    gameOverButton.textContent = "Restart"
+    gameOverButton.style.left = boardWidth/2
+    gameOverButton.style.top = boardHight/2 + rem
+    gameOverButton.style.padding = 0.5 * rem
+
+    document.body.appendChild(gameOverButton)
+}
+
+
+function createGameOverDescription() {
+
+    gameOverDescription = document.createElement("h1")
+    gameOverDescription.style.position = "absolute"
+    gameOverDescription.textContent = "U DIEDD"
+    gameOverDescription.style.color = "black"
+    gameOverDescription.style.fontSize = 6*rem
+    gameOverDescription.style.left = boardWidth/2 - 10*rem
+    gameOverDescription.style.top = boardHight/2 - 150
+    gameOverButton.onclick = () =>  gameRestart()
+
+    document.body.appendChild(gameOverDescription)
+}
+
+
+function createGameOverScore() {
+
+    gameScore = document.createElement("h1")
+    gameScore.style.position = "absolute"
+    gameScore.textContent = `Your score is ${score}`
+    gameScore.fontSize = 2*rem
+    gameScore.style.left = boardWidth/2 - 4*rem
+    gameScore.style.top = boardHight/2 + 40
+
+    document.body.appendChild(gameScore)
 }
 
 
