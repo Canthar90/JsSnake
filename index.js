@@ -43,7 +43,7 @@ function gameOverScreen (){
     if (gameOver && !gameOverButton){
         createGameOverButton()
         createGameOverDescription()
-        createGameOverDescription()
+        createGameOverScore()
     }
 }
 
@@ -108,7 +108,8 @@ function foodColisionDetection (snakeSegment){
     let foodBottomPos = foodTopPos + 16
     
     if (!(snakeRightPos < foodLeftPos || snakeLeftPos > foodRightPos || snakeBottomPos < foodTopPos || snakeTopPos > foodBottomPos)){
-        createFoodElement()
+        foodExistance=false
+        foodManagment()
         return true
     }
 }
@@ -125,33 +126,40 @@ function checkIfFoodColideWithSnake(){
 }
 
 
-function createFoodElement () {
+function foodManagment () {
     if (foodItem ) {
-        foodItem.style.top =  (Math.random() * (boardBorderDown - boardBorderUp - 90) + boardBorderUp + 90) + 'px'
-        foodItem.style.left =  (Math.random() * (boardBorderRight - boardBorderLeft - 90) + boardBorderLeft + 90) + 'px'
-        
-        foodExistance = true
-        checkIfFoodColideWithSnake()
-        
+        moveFood() 
     }else {
-        foodItem = document.createElement("div")
-        foodItem.id = `food`
-        foodItem.style.backgroundColor = "red"
-        foodItem.style.width = rem
-        foodItem.style.height = rem
-        foodItem.style.position = "absolute"
-        
-        foodItem.style.top =  (Math.random() * (boardBorderDown - boardBorderUp) + boardBorderUp) + 'px'
-        foodItem.style.left =  (Math.random() * (boardBorderRight - boardBorderLeft) + boardBorderLeft) + 'px'
-        
-        board.appendChild(foodItem)
-        document.body.appendChild(foodItem)
-        
-        foodExistance = true
-        checkIfFoodColideWithSnake()
-        
+        createFoodElement()  
     }
+}
+
+
+function moveFood() {
+    foodItem.style.top =  (Math.random() * (boardBorderDown - boardBorderUp - 90) + boardBorderUp + 90) + 'px'
+    foodItem.style.left =  (Math.random() * (boardBorderRight - boardBorderLeft - 90) + boardBorderLeft + 90) + 'px'
     
+    foodExistance = true
+    checkIfFoodColideWithSnake()
+}
+
+
+function createFoodElement() {
+    foodItem = document.createElement("div")
+    foodItem.id = `food`
+    foodItem.style.backgroundColor = "red"
+    foodItem.style.width = rem
+    foodItem.style.height = rem
+    foodItem.style.position = "absolute"
+    
+    foodItem.style.top =  (Math.random() * (boardBorderDown - boardBorderUp) + boardBorderUp) + 'px'
+    foodItem.style.left =  (Math.random() * (boardBorderRight - boardBorderLeft) + boardBorderLeft) + 'px'
+    
+    board.appendChild(foodItem)
+    document.body.appendChild(foodItem)
+    
+    foodExistance = true
+    checkIfFoodColideWithSnake()   
 }
 
 
@@ -299,7 +307,7 @@ function gameLogic () {
     })
 
     if (!foodExistance) {
-        createFoodElement()
+        foodManagment()
         
     }
     moveDirections()
