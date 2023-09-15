@@ -12,6 +12,7 @@ let foodItem
 let gameOver = false
 let gameOverButton
 let gameOverDescription
+let gameScore
 
 const boardHight = 900
 const boardWidth = 1200
@@ -34,6 +35,9 @@ if(!interval){
    
 }
 
+function gameRestart (){
+    location.reload()
+}
 
 function gameOverScreen (){
     if (gameOver && !gameOverButton){
@@ -54,8 +58,18 @@ function gameOverScreen (){
         gameOverDescription.style.fontSize = 6*rem
         gameOverDescription.style.left = boardWidth/2 - 10*rem
         gameOverDescription.style.top = boardHight/2 - 150
+        gameOverButton.onclick = () =>  gameRestart()
 
         document.body.appendChild(gameOverDescription)
+
+        gameScore = document.createElement("h1")
+        gameScore.style.position = "absolute"
+        gameScore.textContent = `Your score is ${score}`
+        gameScore.fontSize = 2*rem
+        gameScore.style.left = boardWidth/2 - 4*rem
+        gameScore.style.top = boardHight/2 + 40
+
+        document.body.appendChild(gameScore)
     }
     
 }
